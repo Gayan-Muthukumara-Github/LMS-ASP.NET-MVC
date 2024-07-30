@@ -1,0 +1,63 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <div style="margin-bottom: 5px;"><center><h2>Student Details</h2></center></div>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+    <div style="margin-bottom: 5px;"><a href="@Url.Action("Create","Student")" class="btn btn-primary btn-sm">Add New Student</a></div>
+    <div>
+        <table class="table table-hover table-striped">
+            <tr>
+                <th>Student ID</th>
+                <th>ID Number</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Telephone</th>
+                <th>Registered Date</th>
+                <th>Terminated Date</th>
+                <th>Action</th>
+            </tr>
+            @for (int i = 0; i < Model.Rows.Count; i++)
+            {
+                <tr>
+                    <td>@Model.Rows[i][0]</td>
+                    <td>@Model.Rows[i][1]</td>
+                    <td>@Model.Rows[i][2]</td>
+                    <td>@Model.Rows[i][3]</td>
+                    <td>@Model.Rows[i][4]</td>
+                    <td>@Model.Rows[i][5]</td>
+                    <td>@Model.Rows[i][6]</td>
+                    <td>@Model.Rows[i][7]</td>
+                    <td>@Model.Rows[i][8]</td>
+                    <td>
+                        <a href="@Url.Action("Edit","Student",new { @id = Model.Rows[i][0]})" class="btn btn-info btn-sm">Edit</a>
+                        <a href="@Url.Action("Delete","Student",new { @id = Model.Rows[i][0]})" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+
+
+</div>
+
+
+
+
+

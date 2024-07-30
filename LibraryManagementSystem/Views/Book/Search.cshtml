@@ -1,0 +1,73 @@
+﻿@model IEnumerable<LibraryManagementSystem.Models.BookViewModel>
+
+@{ ViewBag.Title = "Search Books"; }
+
+<h2>Search Books</h2>
+
+@using (Html.BeginForm("SearchResults", "Book", FormMethod.Get))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.Label("Book Reference Number", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("BookReferenceNumber", null, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Book Title", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("BookTitle", null, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Author", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("Author", null, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Search" class="btn btn-success btn-sm" />
+            </div>
+        </div>
+    </div>}
+
+@if (Model != null && Model.Any())
+{
+    <h3>Search Results</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Book Reference Number</th>
+                <th>Book Title</th>
+                <th>Publication</th>
+                <th>Author</th>
+                <th>Student Name</th>
+                <th>Issued Date</th>
+                <th>Return Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.BookReferenceNumber</td>
+                    <td>@item.Title</td>
+                    <td>@item.Publication</td>
+                    <td>@item.Author</td>
+                    <td>@item.StudentName</td>
+                    <td>@item.IssueDate</td>
+                    <td>@item.ReturnDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary btn-sm" })
+</div>
+
