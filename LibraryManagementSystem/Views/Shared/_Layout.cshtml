@@ -23,19 +23,22 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                         <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                         @if (Session["UserID"] != null)
-                         {
-                            <li>@Html.ActionLink("Student", "Index", "Student")</li>
-                            <li>@Html.ActionLink("Book", "Index", "Book")</li>
-                            <li>@Html.ActionLink("BookIssue", "Index", "BookIssue")</li>
-                            <li>@Html.ActionLink("Search Book", "Search", "Book")</li>
-                            <li>@Html.ActionLink("Logout", "Logout", "User")</li> 
-                          }
-                          else
-                          {
-                              <li>@Html.ActionLink("Login", "Login", "User")</li>
-                          }
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @if (Session["UserID"] != null)
+                    {
+                        <li>@Html.ActionLink("Student", "Index", "Student")</li>
+                        <li>@Html.ActionLink("Book", "Index", "Book")</li>
+                        <li>@Html.ActionLink("CD", "Index", "CD")</li>
+                        <li>@Html.ActionLink("BookIssue", "Index", "BookIssue")</li>
+
+                        <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Search Book", "Search", "Book")</li>
+                        <li>@Html.ActionLink("Login", "Login", "User")</li>
+                    }
                 </ul>
             </div>
         </div>

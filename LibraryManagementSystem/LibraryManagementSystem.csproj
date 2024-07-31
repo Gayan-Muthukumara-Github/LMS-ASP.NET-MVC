@@ -122,6 +122,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\BookIssueController.cs" />
+    <Compile Include="Controllers\CDController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookViewModel.cs" />
     <Compile Include="Models\BookIssue.cs" />
+    <Compile Include="Models\CD.cs" />
     <Compile Include="Models\SqlQueryHelper.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\User.cs" />
@@ -192,6 +194,9 @@
     <Content Include="Views\BookIssue\Edit.cshtml" />
     <Content Include="Views\Book\Search.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\CD\Index.cshtml" />
+    <Content Include="Views\CD\Create.cshtml" />
+    <Content Include="Views\CD\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
