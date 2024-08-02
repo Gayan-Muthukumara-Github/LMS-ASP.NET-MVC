@@ -218,7 +218,7 @@ namespace LibraryManagementSystem.Controllers
                         Title = reader["TITLE"].ToString(),
                         Publication = reader["PUBLICATION"].ToString(),
                         Author = reader["AUTHOR"].ToString(),
-                        StudentName = reader["StudentName"] != DBNull.Value ? reader["StudentName"].ToString() : null,
+                        GuestName = reader["GuestName"] != DBNull.Value ? reader["GuestName"].ToString() : null,
                         IssueDate = reader["ISSUE_DATE"] != DBNull.Value ? (DateTime?)reader["ISSUE_DATE"] : null,
                         ReturnDate = reader["RETURN_DATE"] != DBNull.Value ? (DateTime?)reader["RETURN_DATE"] : null
                     });

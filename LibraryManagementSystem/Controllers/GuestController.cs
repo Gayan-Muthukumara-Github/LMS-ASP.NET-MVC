@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace LibraryManagementSystem.Controllers
 {
-    public class StudentController : Controller
+    public class GuestController : Controller
     {
         string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
        
@@ -21,7 +21,7 @@ namespace LibraryManagementSystem.Controllers
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                string q = SqlQueryHelper.GetQuery("GetAllStudents");
+                string q = SqlQueryHelper.GetQuery("GetAllGuests");
                 SqlDataAdapter da = new SqlDataAdapter(q, con);
                 da.Fill(dt);
                 con.Close();
@@ -37,34 +37,34 @@ namespace LibraryManagementSystem.Controllers
 
         public ActionResult Create()
         {
-            return View(new Student());
+            return View(new Guest());
         }
 
         [HttpPost]
-        public ActionResult Create(Student student)
+        public ActionResult Create(Guest guest)
         {
             try
             {
-                if (!ValidateCreateStudent(student))
+                if (!ValidateCreateGuest(guest))
                 {
-                    return View(student);
+                    return View(guest);
                 }
                 using (SqlConnection con = new SqlConnection(cs))
                 {
                     con.Open();
-                    string q = SqlQueryHelper.GetQuery("InsertStudent");
+                    string q = SqlQueryHelper.GetQuery("InsertGuest");
                     SqlCommand cmd = new SqlCommand(q, con);
-                    cmd.Parameters.AddWithValue("@ID_NUMBER", student.IdNumber);
-                    cmd.Parameters.AddWithValue("@FIRST_NAME", student.FirstName);
-                    cmd.Parameters.AddWithValue("@LAST_NAME", student.LastName);
-                    cmd.Parameters.AddWithValue("@EMAIL", student.Email);
-                    cmd.Parameters.AddWithValue("@ADDRESS", student.Address);
-                    cmd.Parameters.AddWithValue("@TELEPHONE", student.Telephone);
-                    cmd.Parameters.AddWithValue("@REGISTERED_DATE", student.RegisteredDate);
+                    cmd.Parameters.AddWithValue("@ID_NUMBER", guest.IdNumber);
+                    cmd.Parameters.AddWithValue("@FIRST_NAME", guest.FirstName);
+                    cmd.Parameters.AddWithValue("@LAST_NAME", guest.LastName);
+                    cmd.Parameters.AddWithValue("@EMAIL", guest.Email);
+                    cmd.Parameters.AddWithValue("@ADDRESS", guest.Address);
+                    cmd.Parameters.AddWithValue("@TELEPHONE", guest.Telephone);
+                    cmd.Parameters.AddWithValue("@REGISTERED_DATE", guest.RegisteredDate);
 
-                    if (student.TerminatedDate.HasValue)
+                    if (guest.TerminatedDate.HasValue)
                     {
-                        cmd.Parameters.AddWithValue("@TERMINATED_DATE", student.TerminatedDate.Value);
+                        cmd.Parameters.AddWithValue("@TERMINATED_DATE", guest.TerminatedDate.Value);
                     }
                     else
                     {
@@ -73,32 +73,32 @@ namespace LibraryManagementSystem.Controllers
 
                     cmd.ExecuteNonQuery();
                     con.Close();
-                    TempData["SuccessMessage"] = "Student Details Added Successfully!";
+                    TempData["SuccessMessage"] = "Guest Details Added Successfully!";
                 }
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View(student);
+                return View(guest);
             }
         }
 
-        private bool ValidateCreateStudent(Student student)
+        private bool ValidateCreateGuest(Guest guest)
         {
-            if (IsDuplicate(student.IdNumber, student.Email))
+            if (IsDuplicate(guest.IdNumber, guest.Email))
             {
                 TempData["DuplicateError"] = "ID Number or Email already exists.";
                 return false;
             }
 
-            if (!IsValidEmail(student.Email))
+            if (!IsValidEmail(guest.Email))
             {
                 TempData["DuplicateError"] = "Invalid email format.";
                 return false;
             }
 
-            if (!IsValidTelephone(student.Telephone))
+            if (!IsValidTelephone(guest.Telephone))
             {
                 TempData["DuplicateError"] = "Invalid telephone number format.";
                 return false;
@@ -107,21 +107,21 @@ namespace LibraryManagementSystem.Controllers
             return true;
         }
 
-        private bool ValidateEditStudent(Student student)
+        private bool ValidateEditGuest(Guest guest)
         {
-            if (!IsValidEmail(student.Email))
+            if (!IsValidEmail(guest.Email))
             {
                 TempData["DuplicateError"] = "Invalid email format.";
                 return false;
             }
 
-            if (!IsValidTelephone(student.Telephone))
+            if (!IsValidTelephone(guest.Telephone))
             {
                 TempData["DuplicateError"] = "Invalid telephone number format.";
                 return false;
             }
 
-            if (!IsValidTerminatedDate(student.RegisteredDate,student.TerminatedDate))
+            if (!IsValidTerminatedDate(guest.RegisteredDate,guest.TerminatedDate))
             {
                 TempData["DuplicateError"] = "Terminated Date must be greater than Registered Date.!";
                 return false;
@@ -184,16 +184,16 @@ namespace LibraryManagementSystem.Controllers
             return Regex.IsMatch(telephone, telephoneRegex);
         }
 
-        // GET: Student/Edit/5
+        // GET: Guest/Edit/5
         public ActionResult Edit(int id)
         {
-            Student student = new Student();
+            Guest guest = new Guest();
             DataTable datatable = new DataTable();
 
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                string q = SqlQueryHelper.GetQuery("GetStudentById");
+                string q = SqlQueryHelper.GetQuery("GetGuestById");
                 SqlDataAdapter da = new SqlDataAdapter(q, con);
                 da.SelectCommand.Parameters.AddWithValue("@id", id);
                 da.Fill(datatable);
@@ -201,48 +201,48 @@ namespace LibraryManagementSystem.Controllers
             }
             if (datatable.Rows.Count == 1)
             {
-                student.StudentId = Convert.ToInt32(datatable.Rows[0][0].ToString());
-                student.IdNumber = datatable.Rows[0][1].ToString();
-                student.FirstName = datatable.Rows[0][2].ToString();
-                student.LastName = datatable.Rows[0][3].ToString();
-                student.Email = datatable.Rows[0][4].ToString();
-                student.Address = datatable.Rows[0][5].ToString();
-                student.Telephone = datatable.Rows[0][6].ToString();
-                student.RegisteredDate = Convert.ToDateTime(datatable.Rows[0][7].ToString());
-                student.TerminatedDate = datatable.Rows[0][8] != DBNull.Value ? (DateTime?)Convert.ToDateTime(datatable.Rows[0][8].ToString()) : null;
+                guest.GuestId = Convert.ToInt32(datatable.Rows[0][0].ToString());
+                guest.IdNumber = datatable.Rows[0][1].ToString();
+                guest.FirstName = datatable.Rows[0][2].ToString();
+                guest.LastName = datatable.Rows[0][3].ToString();
+                guest.Email = datatable.Rows[0][4].ToString();
+                guest.Address = datatable.Rows[0][5].ToString();
+                guest.Telephone = datatable.Rows[0][6].ToString();
+                guest.RegisteredDate = Convert.ToDateTime(datatable.Rows[0][7].ToString());
+                guest.TerminatedDate = datatable.Rows[0][8] != DBNull.Value ? (DateTime?)Convert.ToDateTime(datatable.Rows[0][8].ToString()) : null;
 
-            return View(student);
+            return View(guest);
             }
             
             return RedirectToAction("Index");
         }
 
-        // POST: Student/Edit/5
+        // POST: Guest/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Student student)
+        public ActionResult Edit(int id, Guest guest)
         {
             try
             {
-                if (!ValidateEditStudent(student))
+                if (!ValidateEditGuest(guest))
                 {
-                    return View(student);
+                    return View(guest);
                 }
 
                 using (SqlConnection con = new SqlConnection(cs))
                 {
                     con.Open();
-                    string q = SqlQueryHelper.GetQuery("UpdateStudent");
+                    string q = SqlQueryHelper.GetQuery("UpdateGuest");
                     SqlCommand cmd = new SqlCommand(q, con);
-                    cmd.Parameters.AddWithValue("@ID_NUMBER", student.IdNumber);
-                    cmd.Parameters.AddWithValue("@FIRST_NAME", student.FirstName);
-                    cmd.Parameters.AddWithValue("@LAST_NAME", student.LastName);
-                    cmd.Parameters.AddWithValue("@EMAIL", student.Email);
-                    cmd.Parameters.AddWithValue("@ADDRESS", student.Address);
-                    cmd.Parameters.AddWithValue("@TELEPHONE", student.Telephone);
-                    cmd.Parameters.AddWithValue("@REGISTERED_DATE", student.RegisteredDate);
-                    if (student.TerminatedDate.HasValue)
+                    cmd.Parameters.AddWithValue("@ID_NUMBER", guest.IdNumber);
+                    cmd.Parameters.AddWithValue("@FIRST_NAME", guest.FirstName);
+                    cmd.Parameters.AddWithValue("@LAST_NAME", guest.LastName);
+                    cmd.Parameters.AddWithValue("@EMAIL", guest.Email);
+                    cmd.Parameters.AddWithValue("@ADDRESS", guest.Address);
+                    cmd.Parameters.AddWithValue("@TELEPHONE", guest.Telephone);
+                    cmd.Parameters.AddWithValue("@REGISTERED_DATE", guest.RegisteredDate);
+                    if (guest.TerminatedDate.HasValue)
                     {
-                        cmd.Parameters.AddWithValue("@TERMINATED_DATE", student.TerminatedDate.Value);
+                        cmd.Parameters.AddWithValue("@TERMINATED_DATE", guest.TerminatedDate.Value);
                     }
                     else
                     {
@@ -253,7 +253,7 @@ namespace LibraryManagementSystem.Controllers
                     cmd.ExecuteNonQuery();
                     con.Close();
                 }
-                TempData["SuccessMessage"] = "Student Details Updated Successfully!";
+                TempData["SuccessMessage"] = "Guest Details Updated Successfully!";
                 return RedirectToAction("Index");
             }
             catch
@@ -262,7 +262,7 @@ namespace LibraryManagementSystem.Controllers
             }
         }
 
-        // GET: Student/Delete/5
+        // GET: Guest/Delete/5
         public ActionResult Delete(int id)
         {
             try
@@ -270,24 +270,24 @@ namespace LibraryManagementSystem.Controllers
                 using (SqlConnection con = new SqlConnection(cs))
                 {
                     con.Open();
-                    string q = SqlQueryHelper.GetQuery("DeleteStudent");
+                    string q = SqlQueryHelper.GetQuery("DeleteGuest");
                     SqlCommand cmd = new SqlCommand(q, con);
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.ExecuteNonQuery();
                     con.Close();
                 }
 
-                TempData["SuccessMessage"] = "Student Details Deleted Successfully!";
+                TempData["SuccessMessage"] = "Guest Details Deleted Successfully!";
             }
             catch (SqlException ex)
             {
                 if (ex.Number == 547) // Foreign key violation
                 {
-                    TempData["ErrorMessage"] = "Cannot delete this student because there are associated issued books.";
+                    TempData["ErrorMessage"] = "Cannot delete this guest because there are associated issued books.";
                 }
                 else
                 {
-                    TempData["ErrorMessage"] = "An error occurred while deleting the student.";
+                    TempData["ErrorMessage"] = "An error occurred while deleting the guest.";
                 }
             }
 

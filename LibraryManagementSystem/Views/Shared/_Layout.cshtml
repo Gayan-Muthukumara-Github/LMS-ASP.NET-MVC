@@ -15,28 +15,30 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
                 </button>
-                <img src="~/images/books.png" alt="Library Image" class="img-responsive" style="width: 50px; height: 50px;" />
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     @if (Session["UserID"] != null)
                     {
-                        <li>@Html.ActionLink("Student", "Index", "Student")</li>
+                        <li>@Html.ActionLink("Guest", "Index", "Guest")</li>
                         <li>@Html.ActionLink("Book", "Index", "Book")</li>
                         <li>@Html.ActionLink("CD", "Index", "CD")</li>
                         <li>@Html.ActionLink("BookIssue", "Index", "BookIssue")</li>
-
-                        <li>@Html.ActionLink("Logout", "Logout", "User")</li>
-
                     }
                     else
                     {
                         <li>@Html.ActionLink("Search Book", "Search", "Book")</li>
+                    }
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Session["UserID"] != null)
+                    {
+                        <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+                    }
+                    else
+                    {
                         <li>@Html.ActionLink("Login", "Login", "User")</li>
                     }
                 </ul>

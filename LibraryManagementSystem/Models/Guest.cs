@@ -5,9 +5,9 @@ using System.Web;
 
 namespace LibraryManagementSystem.Models
 {
-    public class Student
+    public class Guest
     {
-        public int StudentId { get; set; }
+        public int GuestId { get; set; }
 
         public string IdNumber { get; set; }
 

@@ -57,7 +57,7 @@ namespace LibraryManagementSystem.Controllers
                     string query = SqlQueryHelper.GetQuery("InsertIssueBook");
                     SqlCommand cmd = new SqlCommand(query, con);
                     cmd.Parameters.AddWithValue("@BOOK_ID", bookIssue.BookId);
-                    cmd.Parameters.AddWithValue("@STUDENT_ID", bookIssue.StudentId);
+                    cmd.Parameters.AddWithValue("@GUEST_ID", bookIssue.GuestId);
                     cmd.Parameters.AddWithValue("@ISSUE_DATE", bookIssue.IssueDate);
                     cmd.Parameters.AddWithValue("@RETURN_DATE", bookIssue.ReturnDate);
                     cmd.ExecuteNonQuery();
@@ -103,7 +103,7 @@ namespace LibraryManagementSystem.Controllers
                 {
                     bookIssue.IssueId = Convert.ToInt32(rdr["ISSUE_ID"]);
                     bookIssue.BookId = Convert.ToInt32(rdr["BOOK_ID"]);
-                    bookIssue.StudentId = Convert.ToInt32(rdr["STUDENT_ID"]);
+                    bookIssue.GuestId = Convert.ToInt32(rdr["GUEST_ID"]);
                     bookIssue.IssueDate = Convert.ToDateTime(rdr["ISSUE_DATE"]);
                     bookIssue.ReturnDate = Convert.ToDateTime(rdr["RETURN_DATE"]);
                 }
@@ -125,7 +125,7 @@ namespace LibraryManagementSystem.Controllers
                     string q = SqlQueryHelper.GetQuery("UpdateIssueBook");
                     SqlCommand cmd = new SqlCommand(q, con);
                     cmd.Parameters.AddWithValue("@BOOK_ID", bookIssue.BookId);
-                    cmd.Parameters.AddWithValue("@STUDENT_ID", bookIssue.StudentId);
+                    cmd.Parameters.AddWithValue("@GUEST_ID", bookIssue.GuestId);
                     cmd.Parameters.AddWithValue("@ISSUE_DATE", bookIssue.IssueDate);
                     cmd.Parameters.AddWithValue("@RETURN_DATE", bookIssue.ReturnDate);
                     cmd.Parameters.AddWithValue("@id", id);
@@ -146,15 +146,15 @@ namespace LibraryManagementSystem.Controllers
             List<SelectListItem> studentList = new List<SelectListItem>();
             using (SqlConnection con = new SqlConnection(cs))
             {
-                string query = SqlQueryHelper.GetQuery("SelectActiveStudents");
+                string query = SqlQueryHelper.GetQuery("SelectActiveGuests");
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    int studentId = Convert.ToInt32(rdr["STUDENT_ID"]);
-                    string studentName = rdr["STUDENT_NAME"].ToString();
-                    studentList.Add(new SelectListItem { Value = studentId.ToString(), Text = studentName });
+                    int guestId = Convert.ToInt32(rdr["GUEST_ID"]);
+                    string guestName = rdr["GUEST_NAME"].ToString();
+                    studentList.Add(new SelectListItem { Value = guestId.ToString(), Text = guestName });
                 }
             }
             return studentList;

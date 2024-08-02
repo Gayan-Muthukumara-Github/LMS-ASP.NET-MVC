@@ -11,7 +11,7 @@ namespace LibraryManagementSystem.Models
         public string Title { get; set; }
         public string Publication { get; set; }
         public string Author { get; set; }
-        public string StudentName { get; set; }
+        public string GuestName { get; set; }
         public DateTime? IssueDate { get; set; }
         public DateTime? ReturnDate { get; set; }
     }

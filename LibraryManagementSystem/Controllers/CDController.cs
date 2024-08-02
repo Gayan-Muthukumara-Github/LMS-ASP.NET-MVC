@@ -173,45 +173,6 @@ namespace LibraryManagementSystem.Controllers
         }
 
 
-        public ActionResult Search()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public ActionResult SearchResults(string BookReferenceNumber, string BookTitle, string Author)
-        {
-            List<BookViewModel> books = new List<BookViewModel>();
-
-            using (SqlConnection con = new SqlConnection(cs))
-            {
-                con.Open();
-                string query = "SearchBooks";
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@BookReferenceNumber", string.IsNullOrEmpty(BookReferenceNumber) ? (object)DBNull.Value : BookReferenceNumber);
-                cmd.Parameters.AddWithValue("@BookTitle", string.IsNullOrEmpty(BookTitle) ? (object)DBNull.Value : BookTitle);
-                cmd.Parameters.AddWithValue("@Author", string.IsNullOrEmpty(Author) ? (object)DBNull.Value : Author);
-
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    books.Add(new BookViewModel
-                    {
-                        BookReferenceNumber = reader["BOOK_REFERENCE_NUMBER"].ToString(),
-                        Title = reader["TITLE"].ToString(),
-                        Publication = reader["PUBLICATION"].ToString(),
-                        Author = reader["AUTHOR"].ToString(),
-                        StudentName = reader["StudentName"] != DBNull.Value ? reader["StudentName"].ToString() : null,
-                        IssueDate = reader["ISSUE_DATE"] != DBNull.Value ? (DateTime?)reader["ISSUE_DATE"] : null,
-                        ReturnDate = reader["RETURN_DATE"] != DBNull.Value ? (DateTime?)reader["RETURN_DATE"] : null
-                    });
-                }
-            }
-
-            return View("Search", books);
-        }
+        
     }
 }

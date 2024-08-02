@@ -4,7 +4,7 @@
 }
 
 <div class="container">
-    <div style="margin-bottom: 5px;"><center><h2>Student Details</h2></center></div>
+    <div style="margin-bottom: 5px;"><center><h2>Guest Details</h2></center></div>
     @if (TempData["SuccessMessage"] != null)
     {
         <div class="alert alert-success">
@@ -17,11 +17,11 @@
             @TempData["ErrorMessage"]
         </div>
     }
-    <div style="margin-bottom: 5px;"><a href="@Url.Action("Create","Student")" class="btn btn-primary btn-sm">Add New Student</a></div>
+    <div style="margin-bottom: 5px;"><a href="@Url.Action("Create","Guest")" class="btn btn-primary btn-sm">Add New Guest</a></div>
     <div>
         <table class="table table-hover table-striped">
             <tr>
-                <th>Student ID</th>
+                <th>Guest ID</th>
                 <th>ID Number</th>
                 <th>First Name</th>
                 <th>Last Name</th>
@@ -45,8 +45,8 @@
                     <td>@Model.Rows[i][7]</td>
                     <td>@Model.Rows[i][8]</td>
                     <td>
-                        <a href="@Url.Action("Edit","Student",new { @id = Model.Rows[i][0]})" class="btn btn-info btn-sm">Edit</a>
-                        <a href="@Url.Action("Delete","Student",new { @id = Model.Rows[i][0]})" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="@Url.Action("Edit","Guest",new { @id = Model.Rows[i][0]})" class="btn btn-info btn-sm">Edit</a>
+                        <a href="@Url.Action("Delete","Guest",new { @id = Model.Rows[i][0]})" class="btn btn-danger btn-sm">Delete</a>
                     </td>
                 </tr>
             }
